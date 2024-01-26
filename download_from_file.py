@@ -22,7 +22,16 @@ def download_videos(input_file, ip_address):
         return
 
     input_directory = os.path.dirname(input_file)
-    subprocess.run(['yt-dlp', '--batch-file', input_file, '-o', os.path.join(input_directory, '%(title)s.%(ext)s')])
+    # subprocess.run(['yt-dlp', '--batch-file', input_file, '-o', os.path.join(input_directory, '%(title)s.%(ext)s')])
+
+    command = [
+    "yt-dlp",
+    "--batch-file", input_file,
+    "-o", f"{input_directory}/%(title)s.%(ext)s",
+    "--format", "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]"
+    ]
+
+    subprocess.run(command, check=True)
 
 
 if __name__ == "__main__":
